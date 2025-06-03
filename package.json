@@ -1,0 +1,21 @@
+{
+  "name": "accessibility-scanner",
+  "version": "1.1.0",
+  "description": "Automated accessibility testing with Playwright and axe.",
+  "main": "dist/runner.js",
+  "author": "Joshua Oblong",
+  "scripts": {
+    "test:dev": "cross-env NODE_ENV=development playwright test",
+    "test:test": "cross-env NODE_ENV=test playwright test",
+    "test:prod": "cross-env NODE_ENV=production playwright test"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "axe-playwright": "^2.1.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.2",
+    "playwright": "^1.52.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
