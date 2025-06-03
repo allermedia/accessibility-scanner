@@ -1,4 +1,4 @@
-# Accessibility Check
+# Accessibility Scanner
 
 Automated accessibility testing for websites using Playwright and axe-core. Generates combined HTML reports with violations grouped by rule and affected URLs.
 
@@ -105,12 +105,7 @@ Open `artifacts/combined-accessibility-report.html` in your browser.
 * [ ] Extract active pages from CMS per site
 * [ ] Add scripts for AllerService and Pling SE/DK
 * [ ] Per-site and per-env reporting
-
----
-
-## License
-
-MIT
+* [ ] Daily job to send alerts for found violations
 
 ---
 
