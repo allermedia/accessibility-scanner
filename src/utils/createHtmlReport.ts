@@ -7,7 +7,8 @@ import prettier from "prettier";
 export default async function writeHtmlReport(
     grouped: Record<string, GroupedViolation>,
     urls: string[],
-    outputDir: string
+    outputDir: string,
+    fileName: string = "accessibility-report.html"
 ) {
     const violationCards = await Promise.all(
         Object.values(grouped).map(async (v, i) => {
@@ -153,5 +154,5 @@ export default async function writeHtmlReport(
 </html>
     `;
     fs.mkdirSync(outputDir, { recursive: true });
-    fs.writeFileSync(path.join(outputDir, "combined-accessibility-report.html"), html, "utf-8");
+    fs.writeFileSync(path.join(outputDir, fileName), html, "utf-8");
 }

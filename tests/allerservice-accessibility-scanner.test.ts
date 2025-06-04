@@ -16,7 +16,7 @@ const axeTags = (process.env.AXE_TAGS!).split(',');
 
 // List of URLs to scan
 test.beforeAll(async () => {
-    urls = await fetchSitemapUrls(process.env.PRENUMERERA_URL!)
+    urls = await fetchSitemapUrls(process.env.ALLERSERVICE_URL!)
         .then(urls => {
             console.log(`Fetched ${urls.length} URLs from sitemap.`);
             return urls;
@@ -40,38 +40,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     await page.waitForLoadState('domcontentloaded');
     console.log('Page loaded.');
 
-    const consentButton = await page.$('button#onetrust-accept-btn-handler');
-    if (consentButton) {
-        console.log('Clicking consent button...');
-        await consentButton.click();
-        await page.waitForTimeout(500);
-        console.log('Consent accepted.');
-    } else {
-        console.log('Consent button not found.');
-    }
-
-    const minaSidorLink = await page.$('a[aria-label="Mina sidor"]');
-    if (minaSidorLink) {
-        console.log('Clicking "Mina sidor" link...');
-        await Promise.all([
-            page.waitForLoadState('domcontentloaded'),
-            minaSidorLink.click(),
-        ]);
-        console.log('"Mina sidor" page loaded.');
-    } else {
-        console.log('"Mina sidor" link not found.');
-    }
-
-    console.log('Filling in login form...');
-    await page.fill('input#email', 'emma_test@test.se');
-    await page.fill('input#password', 'test123');
-
-    console.log('Clicking login button...');
-    await page.click('button.btn--login[type="submit"]');
-
-    console.log('Waiting for login greeting...');
-    await page.waitForSelector('h3.ms-nav__customer-info__greeting', { timeout: 50000 });
-    console.log('Login successful.');
+    // TODO: Add consent handling and log in if necessary, rest can stay the same
 
     await page.waitForTimeout(2000);
 
@@ -128,7 +97,7 @@ test.afterAll(async () => {
         }
     }
 
-    writeHtmlReport(grouped, urls, 'artifacts', 'prenumerera-accessibility-report.html');
+    writeHtmlReport(grouped, urls, 'artifacts', 'allerservice-accessibility-report.html');
 });
 
 
