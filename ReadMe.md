@@ -4,19 +4,12 @@ Automated accessibility testing for websites using Playwright and axe-core. Gene
 
 ---
 
-## Status
-
-**Early Version:**
-This project currently supports a single website/configuration (`prenumerera`). To support more sites (e.g. `allerservice`), duplicate the pattern (scanner test file + URLs file) and adjust imports as needed. Multi-site support will be streamlined in future versions.
-
----
-
 ## Features
 
-* Automated accessibility scanning for all URLs in the environment file.
-* Environments: test, staging, production.
-* Cookie consent auto-accept.
-* Grouped, detailed HTML report in `/artifacts`.
+- Automated accessibility scanning for all URLs found in a site's sitemap.
+- Supports environments: test, staging, production.
+- Cookie consent auto-accept and login flow for protected pages (Prenumerera only).
+- Grouped, detailed HTML report in `/artifacts`.
 
 ---
 
@@ -28,15 +21,15 @@ This project currently supports a single website/configuration (`prenumerera`). 
 │   └── combined-accessibility-report.html   # Output HTML report
 ├── node_modules/
 ├── src/
-│   ├── config/
-│   │   ├── prenumerera.production.urls.ts
-│   │   ├── prenumerera.staging.urls.ts
-│   │   └── prenumerera.test.urls.ts
 │   ├── types/
 │   │   └── groupedViolation.d.ts
-│   └── reporter.ts
+│   └── utils/
+│       ├── createHtmlReport.ts
+│       ├── getSitemapUrls.ts
+│       └── groupNodes.ts
 ├── tests/
-│   └── prenumerera-accessinility-scanner.test.ts
+│   ├── prenumerera-accessibility-scanner.test.ts
+│   └── allerservice-accessibility-scanner.test.ts
 ├── .env
 ├── .env.production
 ├── .env.staging
@@ -50,27 +43,28 @@ This project currently supports a single website/configuration (`prenumerera`). 
 
 ## URL Configuration
 
-* URLs are in TypeScript arrays, one file per environment, under `src/config/`.
-* Example: `prenumerera.test.urls.ts`
-
-  ```typescript
-  export default [
-    "https://prenumerera.se/",
-    // ...
-  ];
-  ```
-* To add support for another site (e.g. allerservice):
-
-  1. Add `src/config/allerservice.test.urls.ts` etc.
-  2. Add `tests/allerservice-accessinility-scanner.test.ts` with matching imports.
+- URLs are fetched from the sitemap of the site specified in the environment variable:
+  - `PRENUMERERA_URL` for Prenumerera
+  - `ALLERSERVICE_URL` for AllerService
 
 ---
 
 ## Environment Variables
 
-* Environment chosen by `NODE_ENV` (`test`, `staging`, `production`).
-* `.env.*` files are supported and gitignored.
-* Sensitive config should go in the relevant `.env.[env]` file.
+- Environment is chosen by `NODE_ENV` (`test`, `staging`, `production`).
+- `.env.*` files are supported and gitignored.
+- Example `.env.test`:
+  ```
+  NODE_ENV=test
+  PRENUMERERA_URL=https://www.prenumerera.se/
+  ALLERSERVICE_URL=https://www.allerservice.dk/
+  PLING_DK_URL=https://www.pling.dk/
+  PLING_SE_URL=https://www.pling.se/
+  ```
+- Axe rule tags are set in `.env`:
+  ```
+  AXE_TAGS=wcag2a,wcag2aa,wcag21,wcag21a,wcag21aa,en301549
+  ```
 
 ---
 
@@ -82,16 +76,23 @@ This project currently supports a single website/configuration (`prenumerera`). 
 npm install
 ```
 
-### 2. Edit URLs
+### 2. Configure
 
-Add/edit URLs in the config files.
+- Edit `.env.*` files for your environment and base URLs.
 
 ### 3. Run
 
 ```sh
-npm run test:test        # .env.test + prenumerera.test.urls.ts
-npm run test:staging     # .env.staging + prenumerera.staging.urls.ts
-npm run test:prod        # .env.production + prenumerera.production.urls.ts
+npm run test:test        # Uses .env.test
+npm run test:staging     # Uses .env.staging
+npm run test:prod        # Uses .env.production
+```
+
+By default, both test scripts will run. To run only one, use Playwright's CLI:
+
+```sh
+npx playwright test tests/prenumerera-accessibility-scanner.test.ts
+npx playwright test tests/allerservice-accessibility-scanner.test.ts
 ```
 
 ### 4. View Report
@@ -100,14 +101,20 @@ Open `artifacts/combined-accessibility-report.html` in your browser.
 
 ---
 
-## Roadmap
+## Test Script Differences
 
-* [ ] Extract active pages from CMS per site
-* [ ] Add scripts for AllerService and Pling SE/DK
-* [ ] Per-site and per-env reporting
-* [ ] Daily job to send alerts for found violations
+- **Prenumerera:** Handles cookie consent and login before scanning.
+- **AllerService:** No consent or login logic; scans all sitemap URLs directly.
 
 ---
 
-**Summary:**
-Early version, supports one config/site at a time. Add more by copying the pattern (URLs + scanner test). Edit `src/config/`, set `NODE_ENV`, run tests, read `/artifacts/combined-accessibility-report.html`. Environment files control any secrets or config.
+## Adding Support for Another Site
+
+1. Add a new `.env` variable for the site's base URL.
+2. Add a new test file in `tests/` modeled after the existing ones.
+3. Adjust login/consent logic as needed.
+
+---
+
+**Summary:**  
+This project scans all URLs found in a site's sitemap for accessibility issues using Playwright and axe-core, then generates a grouped HTML report. Each site can have its own test script and environment variable for configuration.
