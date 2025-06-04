@@ -2,14 +2,72 @@ import fs from "fs";
 import path from "path";
 import { GroupedViolation } from "../types/groupedViolation";
 import { groupNodesBySelectorAndHtml } from "./groupNodes";
+import prettier from "prettier";
 
-export default writeHtmlReport;
-
-function writeHtmlReport(
+export default async function writeHtmlReport(
     grouped: Record<string, GroupedViolation>,
     urls: string[],
     outputDir: string
 ) {
+    const violationCards = await Promise.all(
+        Object.values(grouped).map(async (v, i) => {
+            const rows = await Promise.all(
+                groupNodesBySelectorAndHtml(v.nodes).map(async ({ node, urls }, idx) => {
+                    let prettyHtml = "";
+                    if (node.html) {
+                        try {
+                            prettyHtml = await prettier.format(node.html, { parser: "html" });
+                        } catch {
+                            prettyHtml = node.html; // fallback to raw
+                        }
+                    }
+                    const escapedHtml = prettyHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    return `
+<tr>
+  <td>${idx + 1}</td>
+  <td>
+    <p><strong>Element location</strong></p>
+    <pre><code class="css text-wrap hljs">${Array.isArray(node.target) ? node.target.join('\n') : (node.target || '')}</code></pre>
+    <p><strong>Element source</strong></p>
+    <pre><code class="html text-wrap hljs xml">${escapedHtml}</code></pre>
+    <p><strong>URLs</strong></p>
+    ${Array.from(urls).map(url => {
+                        try {
+                            const u = new URL(url);
+                            return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
+                        } catch {
+                            return `<span class="badge badge-info">${url}</span>`;
+                        }
+                    }).join(' ')}
+  </td>
+  <td>
+    <div class="wrapBreakWord">
+      ${node.failureSummary ? node.failureSummary.replace(/\n/g, '<br>') : ''}
+    </div>
+  </td>
+</tr>`;
+                })
+            );
+
+            // Return the violation card for this group
+            return `
+<div class="card violationCard">
+  <div class="card-body">
+    ... // your card header, summary, etc.
+    <div class="violationNode">
+      <table class="table table-sm table-bordered">
+        <thead>...</thead>
+        <tbody>
+          ${rows.join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+`;
+        })
+    );
+
     let html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +129,7 @@ function writeHtmlReport(
                     ${Object.values(grouped).map((v, i) => `
                         <tr>
                             <th scope="row"><a href="#${i + 1}" class="card-link">${i + 1}</a></th>
-                            <td>${v.description}</td>
+                            <td>${v.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td>
                             <td>${v.id}</td>
                             <td>${v.impact}</td>
                             <td>${v.nodes.length}</td>
@@ -88,85 +146,7 @@ function writeHtmlReport(
                 </tbody>
             </table>
             <h3>Failed</h3>
-            ${Object.values(grouped).map((v, i) => `
-                <div class="card violationCard">
-                    <div class="card-body">
-                        <div class="violationCardLine">
-                            <p class="card-title">
-                                <a id="${i + 1}">${i + 1}.</a> ${v.description}
-                            </p>
-                            <a href="${v.helpUrl}" target="_blank" class="card-link violationCardTitleItem learnMore">Learn more</a>
-                        </div>
-                        <div class="violationCardLine">
-                            <p class="card-subtitle mb-2 text-muted">${v.id}</p>
-                            <p class="card-subtitle mb-2 text-muted violationCardTitleItem">${v.impact}</p>
-                        </div>
-                        <div class="violationCardLine">
-                            <p class="card-text">${v.help}</p>
-                            <p class="card-subtitle mb-2 text-muted violationCardTitleItem"></p>
-                        </div>
-                        <div class="violationCardLine">
-                            <p class="card-subtitle mb-4 text-muted violationCardTitleItem">
-                                Issue Tags: 
-                                ${(Array.isArray(v.tags) && v.tags.length > 0
-            ? v.tags.map(tag => `<span class="badge bg-light text-dark"> ${tag} </span>`).join('\n')
-            : '')}
-                            </p>
-                        </div>
-                        <div class="violationCardLine">
-                            <p class="card-subtitle mb-4 text-muted violationCardTitleItem">
-                                Affected URLs: 
-                                ${Array.from(v.urls).map(url => {
-                try {
-                    const u = new URL(url);
-                    return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
-                } catch {
-                    return `<span class="badge badge-info">${url}</span>`;
-                }
-            }).join(' ')}
-                            </p>
-                        </div>
-                        <div class="violationNode">
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 2%">#</th>
-                                        <th style="width: 49%">Issue Description</th>
-                                        <th style="width: 49%">To solve this violation, you need to...</th>
-                                    </tr>
-                                </thead>
-                                    <tbody>
-                                        ${groupNodesBySelectorAndHtml(v.nodes).map(({ node, urls }, idx) => `
-                                            <tr>
-                                                <td>${idx + 1}</td>
-                                                <td>
-                                                    <p><strong>Element location</strong></p>
-                                                    <pre><code class="css text-wrap">${Array.isArray(node.target) ? node.target.join(', ') : ''}</code></pre>
-                                                    <p><strong>Element source</strong></p>
-                                                    <pre><code class="html text-wrap">${node.html ? node.html.replace(/</g, '&lt;') : ''}</code></pre>
-                                                    <p><strong>URLs</strong></p>
-                                                    ${Array.from(urls).map(url => {
-                try {
-                    const u = new URL(url);
-                    return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
-                } catch {
-                    return `<span class="badge badge-info">${url}</span>`;
-                }
-            }).join(' ')}
-                                                </td>
-                                                <td>
-                                                    <div class="wrapBreakWord">
-                                                        ${node.failureSummary ? node.failureSummary.replace(/\n/g, '<br>') : ''}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        `).join('')}
-                                    </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `).join('')}
+            ${violationCards.join('')}
         </div>
         <script>hljs.initHighlightingOnLoad();</script>
     </main>
