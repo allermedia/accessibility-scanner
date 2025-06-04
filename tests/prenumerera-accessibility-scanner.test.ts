@@ -9,7 +9,7 @@ dotenv.config();
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'test'}` });
 
 // Store all violations per page
-let urls: string[] = ['http://prenumerera.se/', 'http://prenumerera.se/tidningar/'];
+let urls: string[] = [];
 const allViolationsPerPage: Record<string, Result[]> = {};
 // Parse tags from .env or use default
 const axeTags = (process.env.AXE_TAGS!).split(',');
