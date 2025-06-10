@@ -4,7 +4,7 @@ import { injectAxe, getViolations } from 'axe-playwright';
 import { GroupedViolation } from '../src/types/groupedViolation';
 import writeHtmlReport from '../src/utils/createHtmlReport';
 import dotenv from 'dotenv';
-import fetchSitemapUrls from '../src/utils/getUrlsFromSitemap';
+import fetchCsvUrls from '../src/utils/getUrlsFromCsv';
 dotenv.config();
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'test'}` });
 
@@ -16,13 +16,13 @@ const axeTags = (process.env.AXE_TAGS!).split(',');
 
 // List of URLs to scan
 test.beforeAll(async () => {
-    urls = await fetchSitemapUrls(process.env.ALLERSERVICE_URL!)
+    urls = await fetchCsvUrls(process.env.ALLERSERVICE_URL!)
         .then(urls => {
-            console.log(`Fetched ${urls.length} URLs from sitemap.`);
+            console.log(`Fetched ${urls.length} URLs from CSV.`);
             return urls;
         })
         .catch(err => {
-            console.error('Error fetching sitemap URLs:', err);
+            console.error('Error fetching CSV URLs:', err);
             return [];
         });
 });
@@ -32,7 +32,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
 
     test.setTimeout(120000000);
 
-    const startUrl = process.env.PRENUMERERA_URL || 'https://test.prenumerera.se/';
+    const startUrl = process.env.ALLERSERVICE_URL || 'https://test.allerservice.dk/';
 
     console.log(`Navigating to: ${startUrl}`);
     await page.goto(startUrl);
@@ -40,7 +40,15 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     await page.waitForLoadState('domcontentloaded');
     console.log('Page loaded.');
 
-    // TODO: Add consent handling and log in if necessary, rest can stay the same
+    const consentButton = await page.$('button#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll');
+    if (consentButton) {
+        console.log('Clicking consent button...');
+        await consentButton.click();
+        await page.waitForTimeout(500);
+        console.log('Consent accepted.');
+    } else {
+        console.log('Consent button not found.');
+    }
 
     await page.waitForTimeout(2000);
 

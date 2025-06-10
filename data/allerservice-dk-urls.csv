@@ -1,0 +1,90 @@
+﻿Page;Brand;URL
+Home;All;https://www.allerservice.dk/
+Checkout;All;https://www.allerservice.dk/checkout
+Order success page;All;
+Product page;7;https://www.allerservice.dk/brands/7-tv-dage
+Product page;billed;https://www.allerservice.dk/brands/billed-bladet
+Product page;familie;https://www.allerservice.dk/brands/familie-journal
+Product page;femina;https://www.allerservice.dk/brands/femina
+Product page;isabellas;https://www.allerservice.dk/brands/isabellas
+Product page;se;https://www.allerservice.dk/brands/se-og-hor
+Product page;spis;https://www.allerservice.dk/brands/spis-bedre
+Product page;sondag;https://www.allerservice.dk/brands/sondag
+Product page;ude;https://www.allerservice.dk/brands/ude-og-hjemme
+Product page;kryds;https://www.allerservice.dk/brands/familie-journal-kryds-tvars
+Unlimited;7;https://www.allerservice.dk/brands/7-tv-dage/7-tv-dage-unlimited__155
+Premium;7;https://www.allerservice.dk/brands/7-tv-dage/7-tv-dage-premium__38
+Digital;7;https://www.allerservice.dk/brands/7-tv-dage/7-tv-dage-digital__42
+Unlimited;billed;https://www.allerservice.dk/brands/billed-bladet/billed-bladet-unlimited__150
+Premium;billed;https://www.allerservice.dk/brands/billed-bladet/billed-bladet-premium__52
+Digital;billed;https://www.allerservice.dk/brands/billed-bladet/billed-bladet-digital__51
+Unlimited;familie;https://www.allerservice.dk/brands/familie-journal/familie-journal-unlimited__151
+Premium;familie;https://www.allerservice.dk/brands/familie-journal/familie-journal-premium__56
+Digital;familie;https://www.allerservice.dk/brands/familie-journal/familie-journal-digital__54
+Unlimited;femina;https://www.allerservice.dk/brands/femina/femina-unlimited__187
+Premium;femina;https://www.allerservice.dk/brands/femina/femina-premium__186
+Digital;femina;https://www.allerservice.dk/brands/femina/femina-digital-only__189
+Unlimited;isabellas;https://www.allerservice.dk/brands/isabellas/isabellas-unlimited__156
+Premium;isabellas;https://www.allerservice.dk/brands/isabellas/isabellas-premium__62
+Digital;isabellas;https://www.allerservice.dk/brands/isabellas/isabellas-digital__61
+Unlimited;se;https://www.allerservice.dk/brands/se-og-hor/se-og-hoer-unlimited__152
+Premium;se;https://www.allerservice.dk/brands/se-og-hor/se-og-hor-premium__70
+Digital;se;https://www.allerservice.dk/brands/se-og-hor/se-og-hor-digital__68
+Unlimited;spis;https://www.allerservice.dk/brands/spis-bedre/spis-bedre-unlimited__157
+Premium;spis;https://www.allerservice.dk/brands/spis-bedre/spis-bedre-premium__59
+Digital;spis;https://www.allerservice.dk/brands/spis-bedre/spis-bedre-digital__58
+Unlimited;sondag;https://www.allerservice.dk/brands/sondag/sondag-unlimited__153
+Premium;sondag;https://www.allerservice.dk/brands/sondag/sondag-premium__74
+Digital;sondag;https://www.allerservice.dk/brands/sondag/sondag-digital__71
+Unlimited;ude;https://www.allerservice.dk/brands/ude-og-hjemme/ude-og-hjemme-unlimited__154
+Premium;ude;https://www.allerservice.dk/brands/ude-og-hjemme/ude-og-hjemme-premium__76
+Digital;ude;https://www.allerservice.dk/brands/ude-og-hjemme/ude-og-hjemme-digital__77
+Premium;kryds;https://www.allerservice.dk/brands/familie-journal-kryds-tvars/familie-journal-kryds-tvars-premium__87
+Gift;7;https://www.allerservice.dk/brands/7-tv-dage/7-tv-dage-gave__48
+Gift;billed;https://www.allerservice.dk/brands/billed-bladet/billed-bladet-gave__53
+Gift;familie;https://www.allerservice.dk/brands/familie-journal/familie-journal-gave__57
+Gift;femina;https://www.allerservice.dk/brands/femina/femina-gave__185
+Gift;isabellas;https://www.allerservice.dk/brands/isabellas/isabellas-gave__63
+Gift;se;https://www.allerservice.dk/brands/se-og-hor/se-og-hor-gave__69
+Gift;spis;https://www.allerservice.dk/brands/spis-bedre/spis-bedre-gave__60
+Gift;sondag;https://www.allerservice.dk/brands/sondag/sondag-gave__73
+Gift;ude;https://www.allerservice.dk/brands/ude-og-hjemme/ude-og-hjemme-gave__75
+Gift;kryds;https://www.allerservice.dk/brands/familie-journal-kryds-tvars/familie-journal-kryds-tvars-premium__88
+FAQ;All;https://www.allerservice.dk/faq
+Customer Service;All;https://www.allerservice.dk/kundeservice
+Login;All;https://www.allerservice.dk/logind
+Terms;All;https://www.allerservice.dk/abonnementsbetingelser
+Rights;All;https://www.allerservice.dk/fortrydelsesret
+GDPR;All;https://www.allerservice.dk/gdpr
+About;All;https://www.allerservice.dk/om-aller-media
+FAQ;Complaint;https://www.allerservice.dk/faq/reklamation
+FAQ;Cancelation;https://www.allerservice.dk/faq/opsigelse
+FAQ;Address;https://www.allerservice.dk/faq/midlertidig-adresseaendring
+FAQ;Pause;https://www.allerservice.dk/faq/pause-abonnement
+FAQ;Gift;https://www.allerservice.dk/faq/giv-et-gaveabonnement
+FAQ;Digital magazine;https://www.allerservice.dk/faq/guide-las-dit-blad-digitalt
+FAQ;Abroad;https://www.allerservice.dk/faq/abonnement-udenfor-danmark
+FAQ;Newsletters;https://www.allerservice.dk/faq/nyhedsbreve
+FAQ;Download giftcard;https://www.allerservice.dk/faq/gavekort-til-download
+Brand site;7;N/A
+Brand site;billed;https://www.billedbladet.dk/abonnement?atm_source=billedbladetdk&atm_medium=owned&atm_campaign=aller_2025_billedbladet_ao_1_52_conversion_abo_aboknap
+Brand site - Unlimited;billed;https://www.billedbladet.dk/abonnement/brands/billed-bladet/billed-bladet-unlimited__150
+Brand site - Premium;billed;https://www.billedbladet.dk/abonnement/brands/billed-bladet/billed-bladet-premium__52
+Brand site - Digital;billed;https://www.billedbladet.dk/abonnement/brands/billed-bladet/billed-bladet-digital__51
+Brand site - Gift;billed;https://www.billedbladet.dk/abonnement/brands/billed-bladet/billed-bladet-gave__53
+Brand site;familie;N/A
+Brand site;femina;https://www.femina.dk/abonnement
+Brand site - Unlimited;femina;https://www.femina.dk/abonnement/brands/femina/femina-unlimited__187
+Brand site - Premium;femina;https://www.femina.dk/abonnement/brands/femina/femina-premium__186
+Brand site - Digital;femina;https://www.femina.dk/abonnement/brands/femina/femina-digital-only-fe__191
+Brand site - Gift;femina;https://www.femina.dk/abonnement/brands/femina/femina-gave__185
+Brand site;isabellas;N/A
+Brand site;se;https://www.seoghoer.dk/abonnement
+Brand site - Unlimited;se;https://www.seoghoer.dk/abonnement/brands/se-og-hor/se-og-hoer-unlimited__152
+Brand site - Premium;se;https://www.seoghoer.dk/abonnement/brands/se-og-hor/se-og-hor-premium__70
+Brand site - Digital;se;https://www.seoghoer.dk/abonnement/brands/se-og-hor/se-og-hor-digital__68
+Brand site - Gift;se;https://www.seoghoer.dk/abonnement/brands/se-og-hor/se-og-hor-gave__69
+Brand site;spis;N/A
+Brand site;sondag;N/A
+Brand site;ude;N/A
+Brand site;kryds;N/A

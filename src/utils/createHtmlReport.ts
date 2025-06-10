@@ -1,13 +1,13 @@
-import fs from "fs";
-import path from "path";
-import { GroupedViolation } from "../types/groupedViolation";
-import { groupNodesBySelectorAndHtml } from "./groupNodes";
+import fs from 'fs';
+import path from 'path';
+import { GroupedViolation } from '../types/groupedViolation';
+import { groupNodesBySelectorAndHtml } from './groupNodes';
 
 export default async function writeHtmlReport(
     grouped: Record<string, GroupedViolation>,
     urls: string[],
     outputDir: string,
-    fileName: string = "accessibility-report.html"
+    fileName: string = 'accessibility-report.html'
 ) {
     const violationCards = await Promise.all(
         Object.values(grouped).map(async (v, i) => {

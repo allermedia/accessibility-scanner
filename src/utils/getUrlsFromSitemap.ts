@@ -1,16 +1,16 @@
-import axios from "axios";
-import { parseStringPromise } from "xml2js";
+import axios from 'axios';
+import { parseStringPromise } from 'xml2js';
 
 export default fetchSitemapUrls;
 
 async function fetchSitemapUrls(siteUrl: string): Promise<string[]> {
     if (!siteUrl) {
-        throw new Error("Site URL is required");
+        throw new Error('Site URL is required');
     }
-    if (!siteUrl.endsWith("/sitemap.xml")) {
-        siteUrl = siteUrl.endsWith("/") ? `${siteUrl}sitemap.xml` : `${siteUrl}/sitemap.xml`;
+    if (!siteUrl.endsWith('/sitemap.xml')) {
+        siteUrl = siteUrl.endsWith('/') ? `${siteUrl}sitemap.xml` : `${siteUrl}/sitemap.xml`;
     }
-    const response = await axios.get(siteUrl, { responseType: "text" });
+    const response = await axios.get(siteUrl, { responseType: 'text' });
     const xml = response.data;
     const result = await parseStringPromise(xml);
     const urls: string[] = [];
