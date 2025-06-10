@@ -4,16 +4,20 @@ import { GroupedViolation } from '../types/groupedViolation';
 import { groupNodesBySelectorAndHtml } from './groupNodes';
 
 export default async function writeHtmlReport(
-    grouped: Record<string, GroupedViolation>,
-    urls: string[],
-    outputDir: string,
-    fileName: string = 'accessibility-report.html'
+  grouped: Record<string, GroupedViolation>,
+  urls: string[],
+  outputDir: string,
+  fileName: string = 'accessibility-report.html'
 ) {
-    const violationCards = await Promise.all(
-        Object.values(grouped).map(async (v, i) => {
-            const rows = await Promise.all(
-                groupNodesBySelectorAndHtml(v.nodes).map(async ({ node, urls }, idx) => {
-                    return `
+
+  const totalViolations = Object.values(grouped).reduce((sum, v) => sum + v.nodes.length, 0);
+  const totalUniqueIssues = Object.values(grouped)
+    .reduce((sum, v) => sum + groupNodesBySelectorAndHtml(v.nodes).length, 0);
+  const violationCards = await Promise.all(
+    Object.values(grouped).map(async (v, i) => {
+      const rows = await Promise.all(
+        groupNodesBySelectorAndHtml(v.nodes).map(async ({ node, urls }, idx) => {
+          return `
 <tr>
   <td>${idx + 1}</td>
   <td>
@@ -23,13 +27,13 @@ export default async function writeHtmlReport(
     <pre><code class="html text-wrap hljs xml">${node.html.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
     <p><strong>URLs</strong></p>
     ${Array.from(urls).map(url => {
-                        try {
-                            const u = new URL(url);
-                            return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
-                        } catch {
-                            return `<span class="badge badge-info">${url}</span>`;
-                        }
-                    }).join(' ')}
+            try {
+              const u = new URL(url);
+              return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
+            } catch {
+              return `<span class="badge badge-info">${url}</span>`;
+            }
+          }).join(' ')}
   </td>
   <td>
     <div class="wrapBreakWord">
@@ -37,16 +41,16 @@ export default async function writeHtmlReport(
     </div>
   </td>
 </tr>`;
-                })
-            );
+        })
+      );
 
-            // Return the violation card for this group
-            return `
+      // Return the violation card for this group
+      return `
 <div class="card violationCard">
   <div class="card-body">
     <div class="violationCardLine">
       <p class="card-title">
-        <a id="${i + 1}">${i + 1}.</a> ${v.help || v.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+        <a id="${i + 1}">${i + 1}.</a> ${v.help.replace(/</g, '&lt;').replace(/>/g, '&gt;') || v.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
       </p>
       <a
         href="${v.helpUrl || `https://dequeuniversity.com/rules/axe/latest/${v.id}?application=axeAPI`}"
@@ -83,10 +87,10 @@ export default async function writeHtmlReport(
   </div>
 </div>
 `;
-        })
-    );
+    })
+  );
 
-    let html = `
+  let html = `
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -131,7 +135,7 @@ export default async function writeHtmlReport(
             <div class="summarySection">
                 <div class="summary"><p>Scanned URLs:</p><ul>${urls.map(url => `<li>${url}</li>`).join('')}</ul></div>
             </div>
-            <h2>axe-core found <span class="badge badge-warning">${Object.values(grouped).reduce((sum, v) => sum + v.nodes.length, 0)}</span> violations</h2>
+            <h2>axe-core found a total of <span class="badge badge-warning">${totalViolations}</span> violations affecting <span class="badge badge-warning"> ${totalUniqueIssues}</span> unique elements</h2>
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -152,13 +156,13 @@ export default async function writeHtmlReport(
                             <td>${v.impact}</td>
                             <td>${v.nodes.length}</td>
                             <td>${Array.from(v.urls).map(url => {
-        try {
-            const u = new URL(url);
-            return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
-        } catch {
-            return `<span class="badge badge-info">${url}</span>`;
-        }
-    }).join(' ')}</td>
+    try {
+      const u = new URL(url);
+      return `<span class="badge badge-info">${u.pathname}${u.search}${u.hash}</span>`;
+    } catch {
+      return `<span class="badge badge-info">${url}</span>`;
+    }
+  }).join(' ')}</td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -170,6 +174,6 @@ export default async function writeHtmlReport(
     </main>
 </html>
     `;
-    fs.mkdirSync(outputDir, { recursive: true });
-    fs.writeFileSync(path.join(outputDir, fileName), html, "utf-8");
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.writeFileSync(path.join(outputDir, fileName), html, "utf-8");
 }
