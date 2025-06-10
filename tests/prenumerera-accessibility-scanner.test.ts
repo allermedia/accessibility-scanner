@@ -4,7 +4,7 @@ import { injectAxe, getViolations } from 'axe-playwright';
 import { GroupedViolation } from '../src/types/groupedViolation';
 import writeHtmlReport from '../src/utils/createHtmlReport';
 import dotenv from 'dotenv';
-import fetchSitemapUrls from '../src/utils/getSitemapUrls';
+import fetchSitemapUrls from '../src/utils/getUrlsFromSitemap';
 dotenv.config();
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'test'}` });
 

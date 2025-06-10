@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { GroupedViolation } from "../types/groupedViolation";
 import { groupNodesBySelectorAndHtml } from "./groupNodes";
-import prettier from "prettier";
 
 export default async function writeHtmlReport(
     grouped: Record<string, GroupedViolation>,
@@ -14,15 +13,6 @@ export default async function writeHtmlReport(
         Object.values(grouped).map(async (v, i) => {
             const rows = await Promise.all(
                 groupNodesBySelectorAndHtml(v.nodes).map(async ({ node, urls }, idx) => {
-                    let prettyHtml = "";
-                    if (node.html) {
-                        try {
-                            prettyHtml = await prettier.format(node.html, { parser: "html" });
-                        } catch {
-                            prettyHtml = node.html; // fallback to raw
-                        }
-                    }
-                    const escapedHtml = prettyHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     return `
 <tr>
   <td>${idx + 1}</td>
@@ -30,7 +20,7 @@ export default async function writeHtmlReport(
     <p><strong>Element location</strong></p>
     <pre><code class="css text-wrap hljs">${Array.isArray(node.target) ? node.target.join('\n') : (node.target || '')}</code></pre>
     <p><strong>Element source</strong></p>
-    <pre><code class="html text-wrap hljs xml">${escapedHtml}</code></pre>
+    <pre><code class="html text-wrap hljs xml">${node.html.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
     <p><strong>URLs</strong></p>
     ${Array.from(urls).map(url => {
                         try {
@@ -54,10 +44,37 @@ export default async function writeHtmlReport(
             return `
 <div class="card violationCard">
   <div class="card-body">
-    ... // your card header, summary, etc.
+    <div class="violationCardLine">
+      <p class="card-title">
+        <a id="${i + 1}">${i + 1}.</a> ${v.help || v.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+      </p>
+      <a
+        href="${v.helpUrl || `https://dequeuniversity.com/rules/axe/latest/${v.id}?application=axeAPI`}"
+        target="_blank"
+        class="card-link violationCardTitleItem learnMore"
+      >Learn more</a>
+    </div>
+    <div class="violationCardLine">
+      <p class="card-subtitle mb-2 text-muted">${v.id}</p>
+      <p class="card-subtitle mb-2 text-muted violationCardTitleItem">
+        ${Array.isArray(v.tags) ? v.tags.map(tag => `<span class="badge bg-light text-dark">${tag}</span>`).join('\n') : ''}
+      </p>
+    </div>
+    <div class="violationCardLine">
+      <p class="card-text">${v.description.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+      <p class="card-subtitle mb-2 text-muted violationCardTitleItem">
+        ${v.impact}
+      </p>
+    </div>
     <div class="violationNode">
       <table class="table table-sm table-bordered">
-        <thead>...</thead>
+        <thead>
+          <tr>
+            <th style="width: 2%">#</th>
+            <th style="width: 49%">Element</th>
+            <th style="width: 49%">Failure Summary</th>
+          </tr>
+        </thead>
         <tbody>
           ${rows.join('')}
         </tbody>
