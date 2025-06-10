@@ -32,7 +32,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
 
     test.setTimeout(120000000);
 
-    const startUrl = process.env.PRENUMERERA_URL || 'https://test.prenumerera.se/';
+    const startUrl = process.env.PRENUMERERA_URL!;
 
     console.log(`Navigating to: ${startUrl}`);
     await page.goto(startUrl);
@@ -63,8 +63,8 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     }
 
     console.log('Filling in login form...');
-    await page.fill('input#email', 'emma_test@test.se');
-    await page.fill('input#password', 'test123');
+    await page.fill('input#email', process.env.PRENUMERERA_LOGIN!);
+    await page.fill('input#password', process.env.PRENUMERERA_LOGIN_PASSWORD!);
 
     console.log('Clicking login button...');
     await page.click('button.btn--login[type="submit"]');

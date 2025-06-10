@@ -56,10 +56,12 @@ Automated accessibility testing for websites using Playwright and axe-core. Gene
 
 - Environment is chosen by `NODE_ENV` (`test`, `staging`, `production`).
 - `.env.*` files are supported and gitignored.
-- Example `.env.test`:
+- Example `.env.production`:
   ```
   NODE_ENV=test
   PRENUMERERA_URL=https://www.prenumerera.se/
+  PRENUMERERA_LOGIN_EMAIL=test@test.se
+  PRENUMERERA_LOGIN_PASSWORD=test123
   ALLERSERVICE_URL=https://www.allerservice.dk/
   PLING_DK_URL=https://www.pling.dk/
   PLING_SE_URL=https://www.pling.se/
@@ -82,7 +84,6 @@ npm install
 ### 2. Configure
 
 - Edit `.env.*` files for your environment and base URLs.
-
 ### 3. Run
 
 You can run all tests for an environment, or target a specific site and environment:
