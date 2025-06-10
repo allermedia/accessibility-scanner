@@ -105,7 +105,7 @@ test.afterAll(async () => {
         }
     }
 
-    writeHtmlReport(grouped, urls, 'artifacts', 'allerservice-accessibility-report.html');
+    writeHtmlReport(grouped, urls, 'artifacts', `allerservice-accessibility-report-${process.env.NODE_ENV!}.html`);
 });
 
 

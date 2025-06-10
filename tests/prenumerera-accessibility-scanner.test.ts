@@ -128,7 +128,7 @@ test.afterAll(async () => {
         }
     }
 
-    writeHtmlReport(grouped, urls, 'artifacts', 'prenumerera-accessibility-report.html');
+    writeHtmlReport(grouped, urls, 'artifacts', `prenumerera-accessibility-report-${process.env.NODE_ENV!}.html`);
 });
 
 
