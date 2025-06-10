@@ -63,7 +63,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     }
 
     console.log('Filling in login form...');
-    await page.fill('input#email', process.env.PRENUMERERA_LOGIN!);
+    await page.fill('input#email', process.env.PRENUMERERA_LOGIN_EMAIL!);
     await page.fill('input#password', process.env.PRENUMERERA_LOGIN_PASSWORD!);
 
     console.log('Clicking login button...');
