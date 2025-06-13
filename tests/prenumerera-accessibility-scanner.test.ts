@@ -40,14 +40,19 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     await page.waitForLoadState('domcontentloaded');
     console.log('Page loaded.');
 
-    const consentButton = await page.$('button#onetrust-accept-btn-handler');
-    if (consentButton) {
-        console.log('Clicking consent button...');
-        await consentButton.click();
-        await page.waitForTimeout(500);
-        console.log('Consent accepted.');
-    } else {
+    const consentButtonSelector = 'button#onetrust-accept-btn-handler';
+    try {
+        await page.waitForSelector(consentButtonSelector, { timeout: 7000 });
+        const consentButton = await page.$(consentButtonSelector);
+        if (consentButton) {
+            console.log('Clicking consent button...');
+            await consentButton.click();
+            await page.waitForTimeout(500);
+            console.log('Consent accepted.');
+        }
+    } catch {
         console.log('Consent button not found.');
+        await page.screenshot({ path: 'artifacts/consent-button-not-found.png', fullPage: true });
     }
 
     const minaSidorLink = await page.$('a[aria-label="Mina sidor"]');
@@ -70,7 +75,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     await page.click('button.btn--login[type="submit"]');
 
     console.log('Waiting for login greeting...');
-    await page.waitForSelector('h3.ms-nav__customer-info__greeting', { timeout: 50000 });
+    await page.waitForSelector('h3.ms-nav__customer-info__greeting', { timeout: 500000 });
     console.log('Login successful.');
 
     await page.waitForTimeout(2000);

@@ -32,7 +32,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
 
     test.setTimeout(120000000);
 
-    const startUrl = process.env.ALLERSERVICE_URL || 'https://test.allerservice.dk/';
+    const startUrl = process.env.ALLERSERVICE_URL!;
 
     console.log(`Navigating to: ${startUrl}`);
     await page.goto(startUrl);
@@ -49,6 +49,31 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     } else {
         console.log('Consent button not found.');
     }
+
+    await page.waitForTimeout(2000);
+
+    const loginLink = await page.$('a[aria-label="Log ind"]');
+    if (loginLink) {
+        console.log('Clicking Login link...');
+        await Promise.all([
+            page.waitForLoadState('domcontentloaded'),
+            loginLink.click(),
+        ]);
+        console.log('Login page loaded.');
+    } else {
+        console.log('Login link not found.');
+    }
+
+    console.log('Filling in login form...');
+    await page.fill('input#email', process.env.ALLERSERVICE_LOGIN_EMAIL!);
+    await page.fill('input#password', process.env.ALLERSERVICE_LOGIN_PASSWORD!);
+
+    console.log('Clicking login button...');
+    await page.click('button[type="submit"]');
+
+    console.log('Waiting for login greeting...');
+    await page.waitForSelector('h1.typo-3xl.lg\\:typo-7xl.font-bold.text-white:text("Mine sider")', { timeout: 500000 });
+    console.log('Login successful.');
 
     await page.waitForTimeout(2000);
 

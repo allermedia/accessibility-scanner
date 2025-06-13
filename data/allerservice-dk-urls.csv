@@ -52,6 +52,10 @@ Gift;kryds;https://www.allerservice.dk/brands/familie-journal-kryds-tvars/famili
 FAQ;All;https://www.allerservice.dk/faq
 Customer Service;All;https://www.allerservice.dk/kundeservice
 Login;All;https://www.allerservice.dk/logind
+SelfService;All;https://www.allerservice.dk/mitaller/abonnementsoverblik
+SelfService;All;https://www.allerservice.dk/mitaller/profil
+SelfService;All;https://www.allerservice.dk/mitaller/betaling-levering
+SelfService;All;https://www.allerservice.dk/mitaller/reklamation
 Terms;All;https://www.allerservice.dk/abonnementsbetingelser
 Rights;All;https://www.allerservice.dk/fortrydelsesret
 GDPR;All;https://www.allerservice.dk/gdpr
