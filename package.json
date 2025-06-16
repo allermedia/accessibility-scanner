@@ -14,9 +14,12 @@
     "test:test:prenumerera": "cross-env NODE_ENV=test playwright test tests/prenumerera-accessibility-scanner.test.ts",
     "test:staging:prenumerera": "cross-env NODE_ENV=staging playwright test tests/prenumerera-accessibility-scanner.test.ts",
     "test:prod:prenumerera": "cross-env NODE_ENV=production playwright test tests/prenumerera-accessibility-scanner.test.ts",
-    "test:test:feminadk": "cross-env NODE_ENV=test playwright test tests/femina-dk-accessibility-scanner.test.ts",
-    "test:staging:feminadk": "cross-env NODE_ENV=staging playwright test tests/femina-dk-accessibility-scanner.test.ts",
-    "test:prod:feminadk": "cross-env NODE_ENV=production playwright test tests/femina-dk-accessibility-scanner.test.ts"
+    "test:test:plingdk": "cross-env NODE_ENV=test playwright test tests/pling-dk-accessibility-scanner.test.ts",
+    "test:staging:plingdk": "cross-env NODE_ENV=staging playwright test tests/pling-dk-accessibility-scanner.test.ts",
+    "test:prod:plingdk": "cross-env NODE_ENV=production playwright test tests/pling-dk-accessibility-scanner.test.ts",
+    "test:test:plingse": "cross-env NODE_ENV=test playwright test tests/pling-se-accessibility-scanner.test.ts",
+    "test:staging:plingse": "cross-env NODE_ENV=staging playwright test tests/pling-se-accessibility-scanner.test.ts",
+    "test:prod:plingse": "cross-env NODE_ENV=production playwright test tests/pling-se-accessibility-scanner.test.ts"
   },
   "dependencies": {
     "@playwright/test": "^1.52.0",

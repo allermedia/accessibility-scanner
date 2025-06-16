@@ -37,7 +37,7 @@ export default async function writeHtmlReport(
   </td>
   <td>
     <div class="wrapBreakWord">
-      ${node.failureSummary ? node.failureSummary.replace(/\n/g, '<br>') : ''}
+      ${node.failureSummary ? node.failureSummary.replace(/</g, '&lt;').replace(/>/g, '&gt;') : ''}
     </div>
   </td>
 </tr>`;
