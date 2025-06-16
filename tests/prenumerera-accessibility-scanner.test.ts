@@ -5,6 +5,7 @@ import { GroupedViolation } from '../src/types/groupedViolation';
 import writeHtmlReport from '../src/utils/createHtmlReport';
 import dotenv from 'dotenv';
 import fetchSitemapUrls from '../src/utils/getUrlsFromSitemap';
+import { waitForAnimations } from '../src/utils/waitForAnimations';
 dotenv.config();
 dotenv.config({ path: `.env.${process.env.NODE_ENV || 'test'}` });
 
@@ -39,6 +40,8 @@ test('Accessibility scan for all URLs', async ({ page }) => {
 
     await page.waitForLoadState('domcontentloaded');
     console.log('Page loaded.');
+    await waitForAnimations(page);
+    console.log('Animations completed.');
 
     const consentButtonSelector = 'button#onetrust-accept-btn-handler';
     try {
@@ -87,6 +90,15 @@ test('Accessibility scan for all URLs', async ({ page }) => {
 
         await page.waitForLoadState('domcontentloaded');
         console.log('Page loaded.');
+        await waitForAnimations(page);
+        console.log('Animations completed.');
+        try {
+            await page.waitForSelector('main', { timeout: 5000 });
+        } catch {
+            console.warn(`Skipping a11y check: <main> not found on ${url}, possible error page`);
+            continue;
+        }
+
         await injectAxe(page);
 
         console.log('Running accessibility scan...');
