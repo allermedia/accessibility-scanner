@@ -43,6 +43,7 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     await waitForAnimations(page);
     console.log('Animations completed.');
 
+    // Handle cookie consent if present
     const consentButtonSelector = 'button#onetrust-accept-btn-handler';
     try {
         await page.waitForSelector(consentButtonSelector, { timeout: 7000 });
@@ -58,6 +59,9 @@ test('Accessibility scan for all URLs', async ({ page }) => {
         await page.screenshot({ path: 'artifacts/consent-button-not-found.png', fullPage: true });
     }
 
+    await page.screenshot({ path: 'artifacts/prenumerera-start-page.png', fullPage: true });
+
+    // Login to "Mina sidor"
     const minaSidorLink = await page.$('a[aria-label="Mina sidor"]');
     if (minaSidorLink) {
         console.log('Clicking "Mina sidor" link...');
@@ -81,8 +85,33 @@ test('Accessibility scan for all URLs', async ({ page }) => {
     await page.waitForSelector('h3.ms-nav__customer-info__greeting', { timeout: 500000 });
     console.log('Login successful.');
 
+    // Add item to the cart
+    console.log(`Navigating to: ${startUrl}tidningar`);
+    await page.goto(`${startUrl}tidningar`);
+    await page.waitForLoadState('domcontentloaded');
+    console.log('Page loaded.');
+    await waitForAnimations(page);
+    console.log('Animations completed.');
+    console.log('Trying to add "SALA" magazine to the basket...');
+    const magazineTile = await page.$('div.magazine[data-publication="SALA"]');
+    if (!magazineTile) {
+        throw new Error('Magazine tile with publication code "SALA" not found!');
+    }
+    const addToBasketButton = await magazineTile.$('.btn--basket-add .btn__text');
+    if (!addToBasketButton) {
+        throw new Error('"Lägg i varukorg" button not found in the Allas magazine tile!');
+    }
+    console.log('Clicking "Lägg i varukorg" button...');
+    await addToBasketButton.click();
+    await page.waitForSelector('body.body--overlay-open', { timeout: 10000 });
+    await page.waitForSelector('text=Lagt i varukorgen', { timeout: 10000 });
+
+    console.log('Basket slide-in appeared, item added.');
+
     await page.waitForTimeout(2000);
 
+    // Loop through all URLs and run accessibility checks
+    console.log(`Starting accessibility scan for ${urls.length} URLs...`);
     for (const url of urls) {
 
         console.log(`Navigating to: ${url}`);
