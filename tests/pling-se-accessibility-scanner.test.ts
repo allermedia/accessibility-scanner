@@ -17,6 +17,8 @@ const axeTags = (process.env.AXE_TAGS!).split(',');
 
 // List of URLs to scan
 test.beforeAll(async () => {
+    console.log('Pling Url is: ' + process.env.PLING_SE_URL!);
+    console.log('Axe Tags are: ' + axeTags);
     urls = await fetchCsvUrls(process.env.PLING_SE_URL!)
         .then(urls => {
             console.log(`Fetched ${urls.length} URLs from CSV.`);

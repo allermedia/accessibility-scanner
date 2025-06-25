@@ -56,8 +56,8 @@ test('Accessibility scan for all URLs', async ({ page }) => {
         await page.screenshot({ path: 'artifacts/consent-button-not-found.png', fullPage: true });
     }
 
-    await page.waitForSelector('a.a-button.ml-6.d-none.d-md-block', { timeout: 10000 });
-    const minKontoLink = await page.$('a.a-button.ml-6.d-none.d-md-block');
+    await page.waitForSelector('div.m-header a.ml-6', { timeout: 10000 });
+    const minKontoLink = await page.$('div.m-header a.ml-6');
     if (minKontoLink) {
         console.log('Clicking "Min Konto" link...');
         await Promise.all([
