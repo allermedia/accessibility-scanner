@@ -1,0 +1,25 @@
+Page;Brand;URL
+BrandsOverviewPage;Se alle magasiner;https://staging.pling.dk/alle-magasiner/
+BuyGiftCardPage;Køb gavekort;https://staging.pling.dk/gavekort/kob-gavekort/
+CancelSubscriptionPage;Opsig Pling;https://staging.pling.dk/min-konto/opsig-pling/
+ChangePasswordPage;Skift kodeord;https://staging.pling.dk/min-konto/skift-kodeord/
+ChangePaymentDetailsPage;Skift betalingskort;https://staging.pling.dk/betalingskort-fejl/
+CreateAccountPage;Ny Konto;https://staging.pling.dk/onboarding/opret-konto/
+CreateExistingAccountPage;Pling Favorit;https://staging.pling.dk/onboarding/pling-favorit/
+CreateExistingAccountPage;Pling Kombi;https://staging.pling.dk/onboarding/pling-kombi/
+DashboardPage;Min Konto;https://staging.pling.dk/min-konto/
+ErrorPage;404;https://staging.pling.dk/error/404/
+FaqPage;Ofte stillede spørgsmål;https://staging.pling.dk/ofte-stillede-sporgsmal/
+FrontPage;staging.pling.dk;https://staging.pling.dk/
+GiftCardFrontPage;Gavekort;https://staging.pling.dk/gavekort/
+LoginPage;Login;https://staging.pling.dk/login/
+LogoutPage;Logud;https://staging.pling.dk/logud/
+PartnersFrontPage;Samarbejdspartnere;https://staging.pling.dk/partner-forside/
+PaymentOverviewPage;Betalingsoversigt;https://staging.pling.dk/min-konto/betalingsoversigt/
+PublicationSelectionPage;Brand selection;https://staging.pling.dk/min-konto/brand-selection/
+RedeemedGiftCardReceiptPage;Gavekort kvittering;https://staging.pling.dk/gavekort/gavekort-kvittering/
+ResetPasswordLandingPage;Glemt password landingsside;https://staging.pling.dk/login/
+ResetPasswordPage;Glemt kodeord;https://staging.pling.dk/glemt-kodeord/
+ResetPasswordPage;Reset Password Redirect;https://staging.pling.dk/glemt-kodeord/
+SelectGiftCardPage;Vælg gavekort;https://staging.pling.dk/gavekort/valg-gavekort/
+SpecificBrandPage;Brands;https://staging.pling.dk/alle-magasiner/
