@@ -130,7 +130,7 @@ export default async function writeHtmlReport(
     <main role="main">
         <div style="padding: 2rem">
             <h1>
-                Axe-core® Accessibility Results for PRENUMERERA project
+                Axe-core® Accessibility Results for ${fileName.split("-accessibility-report-")[0]} project
             </h1>
             <div class="summarySection">
                 <div class="summary"><p>Scanned URLs:</p><ul>${urls.map(url => `<li>${url}</li>`).join('')}</ul></div>
