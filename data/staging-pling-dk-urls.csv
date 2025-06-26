@@ -1,6 +1,5 @@
 Page;Brand;URL
 BrandsOverviewPage;Se alle magasiner;https://staging.pling.dk/alle-magasiner/
-BuyGiftCardPage;Køb gavekort;https://staging.pling.dk/gavekort/kob-gavekort/
 CancelSubscriptionPage;Opsig Pling;https://staging.pling.dk/min-konto/opsig-pling/
 ChangePasswordPage;Skift kodeord;https://staging.pling.dk/min-konto/skift-kodeord/
 ChangePaymentDetailsPage;Skift betalingskort;https://staging.pling.dk/betalingskort-fejl/
