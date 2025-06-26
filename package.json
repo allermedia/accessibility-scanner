@@ -23,9 +23,15 @@
     "test:test:plingdk": "cross-env NODE_ENV=test playwright test tests/pling-dk-accessibility-scanner.test.ts",
     "test:staging:plingdk": "cross-env NODE_ENV=staging playwright test tests/pling-dk-accessibility-scanner.test.ts",
     "test:prod:plingdk": "cross-env NODE_ENV=production playwright test tests/pling-dk-accessibility-scanner.test.ts",
+    "test:test:plingdk:mobile": "cross-env NODE_ENV=test playwright test tests/pling-dk-accessibility-scanner-mobile.test.ts",
+    "test:staging:plingdk:mobile": "cross-env NODE_ENV=staging playwright test tests/pling-dk-accessibility-scanner-mobile.test.ts",
+    "test:prod:plingdk:mobile": "cross-env NODE_ENV=production playwright test tests/pling-dk-accessibility-scanner-mobile.test.ts",
     "test:test:plingse": "cross-env NODE_ENV=test playwright test tests/pling-se-accessibility-scanner.test.ts",
     "test:staging:plingse": "cross-env NODE_ENV=staging playwright test tests/pling-se-accessibility-scanner.test.ts",
-    "test:prod:plingse": "cross-env NODE_ENV=production playwright test tests/pling-se-accessibility-scanner.test.ts"
+    "test:prod:plingse": "cross-env NODE_ENV=production playwright test tests/pling-se-accessibility-scanner.test.ts",
+    "test:test:plingse:mobile": "cross-env NODE_ENV=test playwright test tests/pling-se-accessibility-scanner-mobile.test.ts",
+    "test:staging:plingse:mobile": "cross-env NODE_ENV=staging playwright test tests/pling-se-accessibility-scanner-mobile.test.ts",
+    "test:prod:plingse:mobile": "cross-env NODE_ENV=production playwright test tests/pling-se-accessibility-scanner-mobile.test.ts"
   },
   "dependencies": {
     "@playwright/test": "^1.52.0",
